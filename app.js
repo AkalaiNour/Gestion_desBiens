@@ -93,12 +93,18 @@ io.on('connection', (socket) => {
 app.use(client);
 
 // Connect to MongoDB and start the server
-mongoose.connect("mongodb://localhost:27017/Gestion_desBiens")
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server is running on http://localhost:${port}`);
-        });
-    })
-    .catch((err) => {
-        console.error('Database connection error:', err);
-    });
+// Connect to MongoDB and start the server
+mongoose.connect('mongodb://localhost:27017/Gestion_desBiens', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('Connected to MongoDB');
+  // Start the server only after successful connection
+  server.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+  });
+})
+.catch((err) => {
+  console.error('Database connection error:', err);
+});
