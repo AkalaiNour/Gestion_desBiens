@@ -1,6 +1,6 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const livereload = require('livereload');
 const connectLivereload = require('connect-livereload');
@@ -27,11 +27,14 @@ app.use(methodOverride('_method'));
 const server = http.createServer(app);
 const io = socketIo(server);
 
+// MongoDB Atlas connection URL
+const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.5kxbe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
 app.use(session({
     secret: 'your_secret_key', // Replace with a strong secret key
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/Gestion_desBiens' }),
+    store: MongoStore.create({ mongoUrl: mongoURI }),
     cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
 }));
 
@@ -40,7 +43,6 @@ app.use((req, res, next) => {
     console.log('Session:', req.session);
     next();
 });
-
 
 // Livereload setup
 const livereloadServer = livereload.createServer();
@@ -51,8 +53,6 @@ livereloadServer.server.once("connection", () => {
         livereloadServer.refresh("/");
     }, 100);
 });
-
-
 
 io.on('connection', (socket) => {
     console.log('New client connected');
@@ -80,21 +80,18 @@ io.on('connection', (socket) => {
     });
     socket.on('newNotification', (notification) => {
       io.to(notification.userId).emit('newNotification', notification);
-   });
+  });
   
     socket.on('disconnect', () => {
       console.log('Client disconnected');
     });
   });
 
-
-
 // Routes
 app.use(client);
 
 // Connect to MongoDB and start the server
-// Connect to MongoDB and start the server
-mongoose.connect('mongodb://localhost:27017/Gestion_desBiens', {
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
