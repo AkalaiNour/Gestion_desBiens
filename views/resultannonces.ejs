@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/dash.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div class="Sidebar">
+        <a href="/annonce.html">
+         <div><i class="uil uil-home"></i> Page d'accueil</div>
+        </a>
+        <a href="/dashboard">
+         <div><i class="uil uil-list-ul"></i> Mes annonces</div>
+        </a>
+        <a href="/stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="/ListeMessage.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div class="Logout">
+            <a href="/logout">
+              <i class="uil uil-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+    </div>
+    <div class="Container">
+        <h1>Annonces</h1>
+        <form action="/search_Annonce" method="GET" class="search-container">
+            <input type="text" name="query" class="search-bar" placeholder="Search...">
+                <i class="uil uil-search search-icon"></i>
+            </button>
+        </form>
+        <div class="AddAnnonce">
+            <a href="forms.html"><button><i class="uil uil-plus"></i> Add Annonce</button></a>
+        </div>
+        <% if (array.length === 0) { %>
+            <h1 style="text-align: center; margin-top: 50px; color: gray;">pas de données disponibles</h1>
+        <% } else { %>
+            <table class="annonce-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Prix</th>
+                        <th>Surface</th>
+                        <th>Type de bien</th>
+                        <th>Adresse</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% array.forEach((item, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= item.titre %></td>
+                            <td><%= item.Prix %>$</td>
+                            <td><%= item.surface %>m²</td>
+                            <td><%= item.typeDeBien %></td>
+                            <td><%= item.adresse %></td>
+                            <td class="action-buttons">
+                                <a href="Edit/<%= item._id %>"><button class="action-button"><i class="uil uil-edit"></i></button></a>
+                                <form action="/Delete/<%= item._id %>?_method=DELETE" method="post">
+                                    <button class="action-button"><i class="uil uil-trash"></i></button>
+                                </form>
+                                <a href="detaille/<%= item._id %>"><button class="action-button"><i class="uil uil-eye"></i></button></a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const notificationCount = document.getElementById('notificationCount');
+
+    socket.on('newNotification', (notification) => {
+        // Update the notification count
+        let currentCount = parseInt(notificationCount.innerText);
+        notificationCount.innerText = currentCount + 1;
+
+        // Optionally, display a toast or alert
+        alert(notification.message);
+    });
+</script>
+</body>
+
+</html>

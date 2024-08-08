@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    /* Ensure links within the sidebar are white */
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh;
+    /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: fixed;
+    /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+.container {
+    padding: 20px;
+    margin-left: 250px;
+    /* Offset for the sidebar */
+    width: calc(100% - 250px);
+    /* Full width minus the sidebar */
+}
+
+.details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info {
+    flex: 1;
+}
+
+.info h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.info p {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.photos {
+    flex: 1;
+    position: relative;
+    max-width: 600px;
+    /* Limit the size of the photo container */
+    overflow: hidden;
+    /* Hide overflowing images */
+    border-radius: 5px;
+}
+
+.photos img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: none;
+    /* Initially hide all images */
+}
+
+.photos img.active {
+    display: block;
+    /* Only show the active image */
+}
+
+.photos .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 2;
+    transition: background-color 0.3s;
+}
+
+.photos .nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.photos .prev {
+    left: 10px;
+}
+
+.photos .next {
+    right: 10px;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+.actions button {
+    background-color: #564fde;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.actions button i {
+    margin-right: 5px;
+}
+
+.actions button:hover {
+    background-color: #3e38a5;
+}

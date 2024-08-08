@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Annonce Details</title>
+    <link rel="stylesheet" href="/AnnonceDetails.css">
+
+</head>
+<body>
+    <header>
+        <a href="/"><div class="logo">LOGO</div></a>
+        <form action="/search" method="post">
+            <input type="search" name="search" class="search-bar" placeholder="Search...">
+            <div class="filter-container">
+                <i class="uil uil-filter" id="filter-icon"></i>
+                <div class="filter-dropdown" id="filter-dropdown">
+                    <h4>Filtres Disponibles :</h4>
+                    <select name="propertyType" id="propertyType">
+                        <option value="" disabled selected>Type de bien</option>
+                        <% categories.forEach(category=> { %>
+                            <option disabled>=== <%= category.category %> ===</option>
+                            <% category.offerings.forEach(offering=> { %>
+                                <option value="<%= offering %>">
+                                    <%= offering %>
+                                </option>
+                                <% }); %>
+                                    <% }); %>
+                    </select>
+                    <input type="text" name="location" id="location" placeholder="Localisation (ville, code postal)">
+                    <input type="number" name="minPrice" id="minPrice" placeholder="Prix minimum (€)">
+                    <input type="number" name="maxPrice" id="maxPrice" placeholder="Prix maximum (€)">
+                    <input type="number" name="minSurface" id="minSurface" placeholder="Surface minimum (m²)">
+                    <input type="number" name="maxSurface" id="maxSurface" placeholder="Surface maximum (m²)">
+                    <input type="number" name="rooms" id="rooms" placeholder="Nombre de pièces">
+                    <select name="transactionType" id="transactionType">
+                        <option value="" disabled selected>Type de transaction</option>
+                        <option value="vente">Vente</option>
+                        <option value="location">Location</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </div>
+            </div>
+        </form>
+        <div class="navbar">
+            <div class="categories-dropdown">
+                <button class="categories-button">Categories</button>
+                <div class="categories-dropdown-content">
+                    <% categories.forEach(category => { %>
+                    <div class="category-item">
+                        <button class="category-button">
+                            <%= category.category %>
+                        </button>
+                        <div class="offerings-dropdown-content">
+                            <% category.offerings.forEach(offering => { %>
+                            <a href="#">
+                                <%= offering %>
+                            </a>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            <% if (!userLoggedIn) { %>
+            <a href="/">Connexion</a>
+            <% } else { %>
+            <a href="/Favourite.html" class="favorite">
+                <i class="uil uil-heart"></i>
+            </a>
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                    <i class="uil uil-user"></i>
+                </button>
+                <div class="profile-dropdown-content">
+                    <a href="/profile">Mon Profil</a>
+                    <a href="/dashboard">Mes annonces</a>
+                    <a href="/forms.html">Publier une annonce</a>
+                    <a href="/changepassword/<%= userId %>">Changer le mot de passe</a>
+                    <a href="/ListeMessage.html">Chat</a>
+                </div>
+            </div>
+            <a href="/logout" class="logout-button">Déconnexion</a>
+            <% } %>
+        </div>
+    </header>
+    <div class="details-container">
+        <div class="image-container">
+            <% if (annonce.photosVideos && annonce.photosVideos.length > 0) { %>
+                <div class="slider">
+                    <% annonce.photosVideos.forEach((photo, index) => { %>
+                        <img src="<%=photo %>" alt="Annonce Image" class="slider-image <%= index === 0 ? 'active' : '' %>">
+                    <% }); %>
+                    <div class="navigation-icons">
+                        <i id="prevButton" class="uil uil-angle-left"></i>
+                        <i id="nextButton" class="uil uil-angle-right"></i>
+                    </div>
+                </div>
+            <% } else { %>
+                <p>No images available.</p>
+            <% } %>
+        </div>
+        <div class="details-info">
+            <h2><%= annonce.titre %></h2>
+            <p><span>Prix:</span> <%= annonce.Prix %> €</p>
+            <p><span>Surface:</span> <%= annonce.surface %> m²</p>
+            <p><span>Nombre de pièces:</span> <%= annonce.nombreDePieces %></p>
+            <p><span>Type de bien:</span> <%= annonce.typeDeBien %></p>
+            <p><span>Adresse:</span> <%= annonce.adresse %></p>
+            <p><span>Diagnostics:</span> <%= annonce.diagnostics %></p>
+            <p><span>Équipements:</span> <%= annonce.equipements %></p>
+            <p><span>Description:</span> <%= annonce.description %></p>
+            <a href="/message/<%= annonce.userId.id %>/<%= annonce.id %>">
+                <button class="action-button"><i class="uil uil-message"></i> Contacter le vendeur</button>
+            </a>          
+            <button class="favorite-button" data-annonce-id="<%= annonce._id %>">
+                <i class="uil uil-heart"></i>
+            </button>
+        </div>
+    </div>
+    <div class="user-profile">
+        <% if (annonce.userId) { %>
+            <img src="<%= annonce.userId.profilePicture %>" alt="Profile Picture">
+            <div class="user-profile-info">
+                <h3><%= annonce.userId.Nom %> <%= annonce.userId.Prénom %></h3>
+                <p><span>Email:</span> <%= annonce.userId.Email %></p>
+                <p><span>Phone:</span> <%= annonce.userId.Téléphone %></p>
+                <p><a href="/profile/<%= annonce.userId._id %>">View Profile</a></p>
+            </div>
+        <% } else { %>
+            <p>User profile not available.</p>
+        <% } %>
+    </div>
+    <div class="autre-annonce">
+        <h2>Autres Annonces</h2>
+        <% if (otherAnnonces.length > 0) { %>
+            <div class="annonces-grid">
+                <% otherAnnonces.forEach(otherAnnonce => { %>
+                <div class="annonce-box">
+                    <a href="/annonceDetails.html/<%= otherAnnonce._id %>">
+                        <img src="<%= otherAnnonce.photosVideos[0] %>" alt="<%= otherAnnonce.titre %>" class="annonce-image">
+                        <div class="annonce-info">
+                            <h3><%= otherAnnonce.titre %></h3>
+                            <p><span>Prix:</span> <%= otherAnnonce.Prix %> €</p>
+                            <p><span>Type:</span> <%= otherAnnonce.typeDeBien %></p>
+                            <p><span>Surface:</span> <%= otherAnnonce.surface %> m²</p>
+                        </div>
+                    </a>
+                </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No other annonces available.</p>
+        <% } %>
+    </div>
+    
+
+    <!-- Modal for viewing images -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('.slider-image');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const captionText = document.getElementById('caption');
+        const closeBtn = document.querySelector('.close');
+
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        document.getElementById('prevButton').addEventListener('click', function() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            showSlide(currentIndex);
+        });
+
+        document.getElementById('nextButton').addEventListener('click', function() {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            showSlide(currentIndex);
+        });
+
+        showSlide(currentIndex);
+
+        images.forEach((img) => {
+            img.addEventListener('click', function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        const favoriteButton = document.querySelector('.favorite-button');
+        favoriteButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const annonceId = this.getAttribute('data-annonce-id');
+
+            fetch('/favorites/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ annonceId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Annonce added to favorites!');
+                    this.classList.add('added');
+                } else {
+                    alert('Failed to add annonce to favorites: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        const filterIcon = document.getElementById('filter-icon');
+            const filterDropdown = document.getElementById('filter-dropdown');
+    
+            filterIcon.addEventListener('click', function () {
+                filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+    
+            // Apply filters function
+            function applyFilters() {
+                const propertyType = document.getElementById('propertyType').value;
+                const location = document.getElementById('location').value;
+                const minPrice = document.getElementById('minPrice').value;
+                const maxPrice = document.getElementById('maxPrice').value;
+                const minSurface = document.getElementById('minSurface').value;
+                const maxSurface = document.getElementById('maxSurface').value;
+                const rooms = document.getElementById('rooms').value;
+                const transactionType = document.getElementById('transactionType').value;
+    
+                console.log('Applying filters:', {
+                    propertyType,
+                    location,
+                    minPrice,
+                    maxPrice,
+                    minSurface,
+                    maxSurface,
+                    rooms,
+                    transactionType
+                });
+    
+                filterDropdown.style.display = 'none';
+            }
+    });
+    </script>
+</body>
+</html>

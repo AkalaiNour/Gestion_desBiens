@@ -1,0 +1,98 @@
+/* styles.css */
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and general layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+}
+
+.Sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 10px;
+}
+
+/* Container for main content */
+.Container {
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #ffffff;
+}
+
+header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #564fde;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* No activities message */
+p {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+}

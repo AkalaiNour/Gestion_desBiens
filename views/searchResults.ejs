@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annonces</title>
+    <link rel="stylesheet" href="Annonces.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+
+<body>
+    <header>
+        <a href="/">
+            <div class="logo">LOGO</div>
+        </a>
+        <form action="/search" method="post">
+            <input type="search" name="search" class="search-bar" placeholder="Search...">
+            <div class="filter-container">
+                <i class="uil uil-filter" id="filter-icon"></i>
+                <div class="filter-dropdown" id="filter-dropdown">
+                    <h4>Filtres Disponibles :</h4>
+                    <select name="propertyType" id="propertyType">
+                        <option value="" disabled selected>Type de bien</option>
+                        <% categories.forEach(category=> { %>
+                            <option disabled>=== <%= category.category %> ===</option>
+                            <% category.offerings.forEach(offering=> { %>
+                                <option value="<%= offering %>">
+                                    <%= offering %>
+                                </option>
+                                <% }); %>
+                                    <% }); %>
+                    </select>
+                    <input type="text" name="location" id="location" placeholder="Localisation (ville, code postal)">
+                    <input type="number" name="minPrice" id="minPrice" placeholder="Prix minimum (€)">
+                    <input type="number" name="maxPrice" id="maxPrice" placeholder="Prix maximum (€)">
+                    <input type="number" name="minSurface" id="minSurface" placeholder="Surface minimum (m²)">
+                    <input type="number" name="maxSurface" id="maxSurface" placeholder="Surface maximum (m²)">
+                    <input type="number" name="rooms" id="rooms" placeholder="Nombre de pièces">
+                    <select name="transactionType" id="transactionType">
+                        <option value="" disabled selected>Type de transaction</option>
+                        <option value="vente">Vente</option>
+                        <option value="location">Location</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="navbar">
+            <div class="categories-dropdown">
+                <button class="categories-button">Categories</button>
+                <div class="categories-dropdown-content">
+                    <% categories.forEach(category=> { %>
+                        <div class="category-item">
+                            <button class="category-button">
+                                <%= category.category %>
+                            </button>
+                            <div class="offerings-dropdown-content">
+                                <% category.offerings.forEach(offering=> { %>
+                                    <a href="/offerings/<%= offering %>">
+                                        <%= offering %>
+                                    </a>
+                                    <% }) %>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+            <% if (!userLoggedIn) { %>
+                <a href="Connexion.html">Connexion</a>
+                <% } else { %>
+                    <a href="/Favourite.html" class="favorite">
+                        <i class="uil uil-heart"></i>
+                    </a>
+                    <div class="profile-dropdown">
+                        <button class="profile-button">
+                            <i class="uil uil-user"></i>
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="/profile">Mon Profil</a>
+                            <a href="/dashboard">Mes annonces</a>
+                            <a href="/forms.html">Publier une annonce</a>
+                            <a href="/changepassword/<%= userId %>">Changer le mot de passe</a>
+                            <a href="/ListeMessage.html">Chat</a>
+                        </div>
+                    </div>
+                    <a href="/logout" class="logout-button">Déconnexion</a>
+                    <% } %>
+        </div>
+    </header>
+
+    <div class="annonces-container">
+        <% annonces.forEach(function (annonce) { %>
+        <div class="annonce-box">
+            <a href="/annonceDetails.html/<%= annonce._id %>">
+                <% if (annonce.photosVideos && annonce.photosVideos.length > 0) { %>
+                <img src="<%= annonce.photosVideos[0] %>" alt="Annonce Image">
+                <% } else { %>
+                <img src="/path/to/default/image.jpg" alt="No Image Available">
+                <% } %>
+                <div class="annonce-info">
+                    <h2><%= annonce.titre %></h2>
+                    <p><b>Prix</b>: <%= annonce.Prix %> €</p>
+                    <p><b>Nombre de pieces</b>: <%= annonce.nombreDePieces %> </p>
+                    <p><b>Surface</b>: <%= annonce.surface %> </p>
+                </div>
+            </a>
+            <button class="favorite-button" data-annonce-id="<%= annonce._id %>">
+                <i class="uil uil-heart"></i>
+            </button>
+        </div>
+        <% }); %>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select all favorite buttons
+            const favoriteButtons = document.querySelectorAll('.favorite-button');
+
+            // Attach click event listener to each button
+            favoriteButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    // Get the annonce ID from the button's data attribute
+                    const annonceId = this.getAttribute('data-annonce-id');
+                    console.log('Annonce ID from button:', annonceId);
+
+                    // Send a POST request to add the annonce to favorites
+                    fetch('/favorites/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                annonceId
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Annonce added to favorites!');
+                                this.classList.add('added'); // Optional: Change button style
+                            } else {
+                                alert('Failed to add annonce to favorites: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+
+            // Toggle filter dropdown
+            const filterIcon = document.getElementById('filter-icon');
+            const filterDropdown = document.getElementById('filter-dropdown');
+
+            filterIcon.addEventListener('click', function () {
+                filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Apply filters function
+            function applyFilters() {
+                const propertyType = document.getElementById('propertyType').value;
+                const location = document.getElementById('location').value;
+                const minPrice = document.getElementById('minPrice').value;
+                const maxPrice = document.getElementById('maxPrice').value;
+                const minSurface = document.getElementById('minSurface').value;
+                const maxSurface = document.getElementById('maxSurface').value;
+                const rooms = document.getElementById('rooms').value;
+                const transactionType = document.getElementById('transactionType').value;
+
+                // Implement the filter logic here, e.g., making an API request to fetch filtered data
+                console.log('Applying filters:', {
+                    propertyType,
+                    location,
+                    minPrice,
+                    maxPrice,
+                    minSurface,
+                    maxSurface,
+                    rooms,
+                    transactionType
+                });
+
+                // Close the dropdown after applying filters
+                filterDropdown.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

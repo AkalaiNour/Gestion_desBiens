@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ======== CSS ======== -->
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="dash.css">
+     
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+   <title>Responsive Registration Form</title>
+
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/annonce.html">
+         <div><i class="uil uil-home"></i> Page d'accueil</div>
+        </a>
+        <a href="/dashboard">
+         <div><i class="uil uil-list-ul"></i> Mes annonces</div>
+        </a>
+        <a href="/stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="/ListeMessage.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div class="Logout">
+            <a href="/logout">
+              <i class="uil uil-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <header>Ajouter une annonce</header>
+
+        <form action="/forms.html" method="post" enctype="multipart/form-data">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Titre</label>
+                            <input type="text" name="titre" placeholder="Entrer le titre" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Prix</label>
+                            <input type="text" name="Prix" placeholder="Entrer le Prix" step="0.01" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Surface</label>
+                            <input type="number" name="surface" placeholder="Entrer la surface" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Nombre de pièces</label>
+                            <input type="number" name="nombreDePieces" placeholder="Entrer le nombre de pièces" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Type de bien</label>
+                            <select name="typeDeBien" required>
+                                <option disabled selected>Sélectionner le type</option>
+                                <% categories.forEach(category => { %>
+                                    <option disabled>=== <%= category.category %> ===</option>
+                                    <% category.offerings.forEach(offering => { %>
+                                        <option value="<%= offering %>"><%= offering %></option>
+                                        <% }); %>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Adresse complète</label>
+                            <input type="text" name="adresse" placeholder="Entrer l'adresse complète" required>
+                        </div>
+                        
+                        <div class="input-field">
+                            <label>Diagnostics</label>
+                            <textarea id="diagnostics" name="diagnostics" placeholder="Entrer les diagnostics"></textarea>
+                        </div>
+                        <div class="input-field">
+                            <label>Équipements :</label>
+                            <textarea id="equipements" name="equipements" placeholder="Entrer les équipements"></textarea>
+                        </div>
+                        <div class="input-field">
+                            <label>Description</label>
+                            <textarea id="description" name="description" placeholder="Entrer la description" required></textarea>
+                        </div>
+                        <div class="input-field file-input">
+                            <label for="file">Photos et/ou vidéos :</label>
+                            <div class="file-wrapper">
+                                <i class="uil uil-image-plus"></i>
+                                <input type="file" name="photosVideos" id="file" accept="image/*, video/*" multiple required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details ID">
+                    <button class="nextBtn" type="submit">
+                        <span class="btnText">Publier</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                </div> 
+            </div>    
+        </form>
+    </div>
+
+    <!-- Display the textarea content -->
+
+
+    <script>
+        // Function to replace newline characters with <br> tags
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+
+        // Get textarea values and update preview divs
+        document.addEventListener('DOMContentLoaded', () => {
+            const diagnosticsText = document.getElementById('diagnostics').value;
+            const equipementsText = document.getElementById('equipements').value;
+            const descriptionText = document.getElementById('description').value;
+
+            document.getElementById('diagnosticsPreview').innerHTML = formatText(diagnosticsText);
+            document.getElementById('equipementsPreview').innerHTML = formatText(equipementsText);
+            document.getElementById('descriptionPreview').innerHTML = formatText(descriptionText);
+        });
+    </script>
+</body>
+</html>

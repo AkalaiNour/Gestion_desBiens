@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="Connexion.css">
+</head>
+<body>
+    <div class="container">
+        <div class="img">
+            <img src="5.jpg" alt="Image">
+        </div>
+        <div class="other_side">
+            <div class="connexionBox">
+                <h1>INSCRIPTION</h1>
+                <% if (error) { %>
+                    <div class="error-message">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <form action="/inscription.html" method="POST">
+                    <div class="field">
+                        <label for="Nom">Nom</label>
+                        <input type="text" name="Nom" placeholder="Entrez votre nom" required>
+                    </div>
+                    <div class="field">
+                        <label for="Prénom">Prénom</label>
+                        <input type="text" name="Prénom" placeholder="Entrez votre prénom" required>
+                    </div>
+                    <div class="field">
+                        <label for="Email">Email</label>
+                        <input type="email" name="Email" placeholder="Entrez votre email" required>
+                    </div>
+                    <div class="field">
+                        <label for="Password">Mot de passe</label>
+                        <input type="password" name="Password" placeholder="Entrez votre mot de passe" required>
+                    </div>
+                    <div class="field">
+                        <label for="Téléphone">Téléphone</label>
+                        <input type="text" name="Téléphone" placeholder="Entrez votre téléphone" required>
+                    </div>
+                    <div class="field">
+                        <label for="rôle">Rôle:</label>
+                        <select id="rôle" name="rôle">
+                            <option value="Client">Client</option>
+                            <option value="Agent">Agent</option>
+                        </select>
+                    </div>    
+                    <div class="buttonConnexion">
+                        <button type="submit">Inscription</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

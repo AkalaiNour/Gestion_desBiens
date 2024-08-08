@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+/* Reset default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif; /* Use Poppins as the primary font */
+    background-color: #f0f0f0;
+    display: flex;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: white; /* Ensure links within the sidebar are white */
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: fixed; /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+.Container {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Adjusted margin to accommodate Sidebar */
+}
+
+header {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 60px;
+}
+
+.listing-container {
+    display: flex;
+    flex-direction: row; /* Row layout for image and primary details */
+    align-items: flex-start; /* Align items at the top */
+    width: 100%;
+}
+
+.image-box {
+    flex: 1; /* Take up 50% of the container */
+    padding: 5px;
+    margin: 10px;
+}
+
+.image-box img {
+    width: 100%; /* Ensure image takes full width of its container */
+    height: 411px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.primary-details {
+    flex: 1; /* Take up the remaining space next to the image */
+    padding: 10px;
+    margin: 10px 0; /* Adjust the margin to create vertical space */
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+
+.other-details {
+    width: 100%; /* Full width for the other details */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.listing-details h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.detail {
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+
+.detail label {
+    font-weight: bold;
+}
+
+.detail span, .detail div {
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+a:hover {
+    text-decoration: none; /* Ensure no underline on hover */
+}
+.action-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #564fde;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none; /* Remove default underline */
+    display: inline-block; /* Ensure it behaves like a block element */
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #3e38a5;
+}
+.Logout {
+    margin: 300px 0px;    
+}

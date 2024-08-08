@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Annonce</title>
+    <link rel="stylesheet" href="/formsannonce.css">
+    <link rel="stylesheet" href="/dash.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/statistics">
+            <div><i class="uil uil-home"></i> Dashboard</div>
+        </a>
+        <a href="/dashboardAdmin">
+            <div><i class="uil uil-user"></i> Gestion des utilisateurs</div>
+        </a>
+        <a href="/gestionAnnonces">
+            <div><i class="uil uil-list-ul"></i> Gestion des annonces</div>
+        </a>
+        <a href="/deconnexion">
+            <div><i class="uil uil-sign-out-alt"></i>Logout</div>
+        </a>
+    </div>
+    <div class="container">
+        <header>Edit Annonce</header>
+        <form action="/EditAnnonce/<%= obj._id %>?_method=PUT" method="post" >
+            <input type="hidden" name="_method" value="PUT">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Titre</label>
+                            <input type="text" name="titre" value="<%= obj.titre %>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Prix</label>
+                            <input type="text" name="Prix" value="<%= obj.Prix %>" step="0.01" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Surface</label>
+                            <input type="number" name="surface" value="<%= obj.surface %>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Nombre de pièces</label>
+                            <input type="number" name="nombreDePieces" value="<%= obj.nombreDePieces %>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Type de bien</label>
+                            <select name="typeDeBien" required>
+                                <option disabled selected>Sélectionner le type</option>
+                                <% categories.forEach(category => { %>
+                                    <option disabled>=== <%= category.category %> ===</option>
+                                    <% category.offerings.forEach(offering => { %>
+                                        <option value="<%= offering %>" <%= obj.typeDeBien === offering ? 'selected' : '' %>><%= offering %></option>
+                                    <% }); %>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label>Adresse complète</label>
+                            <input type="text" name="adresse" value="<%= obj.adresse %>" required>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="details ID">
+                    <button class="nextBtn" type="submit">
+                        <span class="btnText">Save Changes</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                </div>
+            </div>    
+        </form>
+    </div>
+</body>
+</html>

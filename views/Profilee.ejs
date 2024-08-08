@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/profilee.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"> <!-- Icon library -->
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/"><div class="logo">LOGO</div></a>
+        <form action="/search" method="post">
+            <input type="search" name="search" class="search-bar" placeholder="Search...">
+            <div class="filter-container">
+                <i class="uil uil-filter" id="filter-icon"></i>
+                <div class="filter-dropdown" id="filter-dropdown">
+                    <h4>Filtres Disponibles :</h4>
+                    <select name="propertyType" id="propertyType">
+                        <option value="" disabled selected>Type de bien</option>
+                        <% categories.forEach(category=> { %>
+                            <option disabled>=== <%= category.category %> ===</option>
+                            <% category.offerings.forEach(offering=> { %>
+                                <option value="<%= offering %>">
+                                    <%= offering %>
+                                </option>
+                                <% }); %>
+                                    <% }); %>
+                    </select>
+                    <input type="text" name="location" id="location" placeholder="Localisation (ville, code postal)">
+                    <input type="number" name="minPrice" id="minPrice" placeholder="Prix minimum (€)">
+                    <input type="number" name="maxPrice" id="maxPrice" placeholder="Prix maximum (€)">
+                    <input type="number" name="minSurface" id="minSurface" placeholder="Surface minimum (m²)">
+                    <input type="number" name="maxSurface" id="maxSurface" placeholder="Surface maximum (m²)">
+                    <input type="number" name="rooms" id="rooms" placeholder="Nombre de pièces">
+                    <select name="transactionType" id="transactionType">
+                        <option value="" disabled selected>Type de transaction</option>
+                        <option value="vente">Vente</option>
+                        <option value="location">Location</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </div>
+            </div>
+        </form>
+        <div class="navbar">
+            <div class="categories-dropdown">
+                <button class="categories-button">Categories</button>
+                <div class="categories-dropdown-content">
+                    <% categories.forEach(category => { %>
+                    <div class="category-item">
+                        <button class="category-button">
+                            <%= category.category %>
+                        </button>
+                        <div class="offerings-dropdown-content">
+                            <% category.offerings.forEach(offering => { %>
+                            <a href="#">
+                                <%= offering %>
+                            </a>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            <% if (!userLoggedIn) { %>
+            <a href="/">Connexion</a>
+            <% } else { %>
+            <a href="/Favourite.html" class="favorite">
+                <i class="uil uil-heart"></i>
+            </a>
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                    <i class="uil uil-user"></i>
+                </button>
+                 <div class="profile-dropdown-content">
+                    <a href="/profile">Mon Profil</a>
+                    <a href="/dashboard">Mes annonces</a>
+                    <a href="/forms.html">Publier une annonce</a>
+                    <a href="/changepassword/<%= user.id %>">Changer le mot de passe</a>
+                    <a href="/ListeMessage.html">Chat</a>
+                </div>
+            </div>
+            <a href="/logout" class="logout-button">Déconnexion</a>
+            <% } %>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="profile-pic">
+            <div class="profile-info">
+                <h1><%= user.Nom %> <%= user.Prénom %></h1>
+                <p><strong>Email:</strong> <%= user.Email %></p>
+                <p><strong>Phone:</strong> <%= user.Téléphone %></p>
+                <p><a href="mailto:<%= user.Email %>">Contact</a></p>
+            </div>
+        </div>
+
+        <div class="profile-annonces">
+            <h2>Les Annonces publiée par <%= user.Nom %> <%= user.Prénom %></h2>
+            <div class="annonces-grid">
+                <% annonces.forEach(annonce => { %>
+                <div class="annonce-box">
+                    <a href="/annonceDetails.html/<%= annonce._id %>">
+                        <img src="<%= annonce.photosVideos[0] %>" alt="<%= annonce.titre %>" class="annonce-image">
+                        <div class="annonce-info">
+                            <h3><%= annonce.titre %></h3>
+                            <p><span>Prix:</span> <%= annonce.Prix %> €</p>
+                            <p><span>Type:</span> <%= annonce.typeDeBien %></p>
+                            <p><span>Surface:</span> <%= annonce.surface %> m²</p>
+                        </div>
+                    </a>
+                </div>
+                <% }) %>
+            </div>
+        
+    </div>
+    <script>
+        const filterIcon = document.getElementById('filter-icon');
+            const filterDropdown = document.getElementById('filter-dropdown');
+    
+            filterIcon.addEventListener('click', function () {
+                filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+    
+            // Apply filters function
+            function applyFilters() {
+                const propertyType = document.getElementById('propertyType').value;
+                const location = document.getElementById('location').value;
+                const minPrice = document.getElementById('minPrice').value;
+                const maxPrice = document.getElementById('maxPrice').value;
+                const minSurface = document.getElementById('minSurface').value;
+                const maxSurface = document.getElementById('maxSurface').value;
+                const rooms = document.getElementById('rooms').value;
+                const transactionType = document.getElementById('transactionType').value;
+    
+                console.log('Applying filters:', {
+                    propertyType,
+                    location,
+                    minPrice,
+                    maxPrice,
+                    minSurface,
+                    maxSurface,
+                    rooms,
+                    transactionType
+                });
+    
+                filterDropdown.style.display = 'none';
+            }
+    </script>
+</body>
+</html>

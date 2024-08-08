@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Userdtls.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Listing Details</title>
+    <style>
+        .action-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #564fde;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .action-button:hover {
+            background-color: #3e38a5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .additional-info {
+            margin-top: 20px;
+        }
+
+        .additional-info h3 {
+            margin-bottom: 15px;
+        }
+
+        .btn-group {
+            margin-top: 15px;
+        }
+
+        .btn-group .action-button {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+
+        .btn-group .action-button:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="Sidebar">
+        <a href="/statistics">
+            <div><i class="uil uil-home"></i> Dashboard</div>
+        </a>
+        <a href="/dashboardAdmin">
+            <div><i class="uil uil-user"></i> Gestion des utilisateurs</div>
+        </a>
+        <a href="/gestionAnnonces">
+            <div><i class="uil uil-list-ul"></i> Gestion des annonces</div>
+        </a>
+        <a href="/deconnexion">
+            <div><i class="uil uil-sign-out-alt"></i>Logout</div>
+        </a>
+    </div>
+
+    <div class="Container">
+        <header><%= user.titre %></header>
+
+        <div class="details-container">
+            <div class="profile-section">
+                <div class="profile-picture">
+                    <!-- Check if user.profilePicture exists -->
+                    <% if (user.profilePicture) { %>
+                        <img src="<%= user.profilePicture %>" alt="Profile Picture" onclick="openModal(this)">
+                    <% } else { %>
+                        <img src="/blank.png" alt="Profile" onclick="openModal(this)">
+                    <% } %>
+                </div>
+                <div class="user-info">
+                    <h2><%= user.Nom %> <%= user.Prénom %></h2>
+                    <p><strong>Email:</strong> <%= user.Email %></p>
+                    <p><strong>Téléphone:</strong> <%= user.Téléphone %></p>
+                    <p><strong>Rôle:</strong> <%= user.rôle %></p>
+                    <p><strong>Date de Création:</strong> <%= new Date(user.dateDeCréation).toLocaleDateString('fr-FR') %></p>
+                    <div class="actions">
+                        <a href="/editUser/<%= user._id %>">
+                            <button class="action-button"><i class="uil uil-edit"></i> Modifier</button>
+                        </a>
+                        
+                        <form action="/deleteUser/<%= user._id %>?_method=DELETE" method="POST">
+                            <button class="action-button" type="submit"><i class="uil uil-trash"></i> Supprimer le compte</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional info section with buttons -->
+            <div class="additional-info">
+                <h3>Détails supplémentaires</h3>
+                <div class="btn-group">
+                    <a href="/historique/<%= user._id %>">
+                        <button class="action-button">Historiques d'activité</button>
+                    </a>
+                    <a href="/annonces-publiees/<%= user._id %>">
+                        <button class="action-button">Annonces publiées</button>
+                    </a>
+                    <a href="/messages-envoyes/<%= user._id %>">
+                        <button class="action-button">Messages envoyés</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal structure -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <script>
+        function openModal(element) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = element.src;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

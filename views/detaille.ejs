@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dtls.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Listing Details</title>
+
+    <style>
+        /* Your existing styles */
+        .image-box {
+            position: relative;
+        }
+
+        .image-box img {
+            display: none;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .image-box img.active {
+            display: block;
+        }
+
+        .prev-next-buttons {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .prev-next-buttons i {
+            background-color: rgba(128, 128, 128, 0.359);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 50%;
+            font-size: 30px;
+        }
+
+        .prev-next-buttons i:hover {
+            background-color: #3e38a5;
+        }
+    </style>
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/annonce.html">
+         <div><i class="uil uil-home"></i> Page d'accueil</div>
+        </a>
+        <a href="/dashboard">
+         <div><i class="uil uil-list-ul"></i> Mes annonces</div>
+        </a>
+        <a href="/stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="/ListeMessage.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div class="Logout">
+            <a href="/logout">
+              <i class="uil uil-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+    </div>
+
+    <div class="Container">
+        <header><%= arr.titre %></header>
+
+        <div class="listing-container">
+            <div class="image-box">
+                <% if (arr.photosVideos && arr.photosVideos.length > 0) { %>
+                    <% arr.photosVideos.forEach(function(photo, index) { %>
+                        <!-- Ensure the path is correctly prefixed -->
+                        <img src="<%= photo.startsWith('/') ? photo : '/' + photo %>" alt="Image Description" class="<%= index === 0 ? 'active' : '' %>">
+                    <% }); %>
+                    <div class="prev-next-buttons">
+                        <i id="prevButton" class="uil uil-angle-left"></i>
+                        <i id="nextButton" class="uil uil-angle-right"></i>
+                    </div>
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+            </div>
+            
+            <div class="primary-details">
+                <div class="detail">
+                    <label>Titre:</label>
+                    <span><%= arr.titre %></span>
+                </div>
+                <div class="detail">
+                    <label>Prix:</label>
+                    <span><%= arr.Prix %>$</span>
+                </div>
+                <div class="detail">
+                    <label>Surface:</label>
+                    <span><%= arr.surface %>m²</span>
+                </div>
+                <div class="detail">
+                    <label>Nombre de pièces:</label>
+                    <span><%= arr.nombreDePieces %></span>
+                </div>
+                <div class="detail">
+                    <label>Type de bien:</label>
+                    <span><%= arr.typeDeBien %></span>
+                </div>
+                <div class="detail">
+                    <label>Adresse complète:</label>
+                    <span><%= arr.adresse %></span>
+                </div>
+                <div class="buttonEdit">
+                    <a href="/edit/<%= arr._id %>">
+                        <button class="action-button"><i class="uil uil-edit"></i> Edit</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="listing-details">
+            <% if (!arr) { %>
+                <h1 style="text-align: center; margin-top: 50px; color: gray;">pas de données disponibles</h1>
+            <% } else { %>                
+                <div class="other-details">
+                    <div class="detail">
+                        <label>Description:</label>
+                        <div><%= arr.description %></div>
+                    </div>
+                    <div class="detail">
+                        <label>Diagnostics:</label>
+                        <div><%= arr.diagnostics %></div>
+                    </div>
+                    <div class="detail">
+                        <label>Équipements:</label>
+                        <div><%= arr.equipements %></div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.image-box img');
+            let currentIndex = 0;
+
+            document.getElementById('prevButton').addEventListener('click', function() {
+                images[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                images[currentIndex].classList.add('active');
+            });
+
+            document.getElementById('nextButton').addEventListener('click', function() {
+                images[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                images[currentIndex].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    position: relative; /* Allow for positioning of the wider inputs */
+}
+
+.login-form h2 {
+    margin-bottom: 1.5rem;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the input within the group */
+}
+
+
+.input-group .icon {
+    position: absolute;
+    left: 5px;
+    font-size: 18px;
+    color: #555;
+}
+
+.input-group label {
+    display: none; /* Hide label visually but keep it accessible */
+}
+
+.input-group input {
+    width: calc(160% + 90px); /* Increase width beyond the container */
+    padding: 10px 90px; /* Add padding for icon space */
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Include padding and border in element's total width */
+    margin: 0 -20px; /* Adjust margin to compensate for increased width */
+}
+
+.input-group input:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 8px rgba(37, 117, 252, 0.4);
+    outline: none;
+}
+
+button {
+    width: 113%;
+    padding: 0.75rem;
+    background: #2575fc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    MARGIN-LEFT: -22px;
+}
+
+
+button:hover {
+    background: #1a64d6;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Userdtls.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Messages Envoyés</title>
+    <style>
+        .messages-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .messages-table th, .messages-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .messages-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .messages-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .action-button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #564fde;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .action-button:hover {
+            background-color: #3e38a5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="Sidebar">
+        <a href="/">
+            <div><i class="uil uil-list-ul"></i> Annonces</div>
+        </a>
+        <a href="stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="message.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div><i class="uil uil-bell"></i> Notification</div>
+    </div>
+
+    <div class="Container">
+        <header>Messages envoyés par l'utilisateur</header>
+
+        <table class="messages-table">
+            <thead>
+                <tr>
+                    <th>Destinataire</th>
+                    <th>Contenu</th>
+                    <th>Date d'envoi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% messages.forEach(function(message) { %>
+                    <tr>
+                        <td><%= message.recipientId.Nom %> <%= message.recipientId.Prénom %> (<%= message.recipientId.Email %>)</td>
+                        <td><%= message.content %></td>
+                        <td><%= new Date(message.timestamp).toLocaleString('fr-FR') %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <div class="btn-group">
+            <a href="/detailleUser/<%= userId %>">
+                <button class="action-button">Retour</button>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

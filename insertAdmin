@@ -1,0 +1,33 @@
+// insertAdmin.js
+
+const mongoose = require('mongoose');
+const Admin = require('./models/Admin'); // Adjust the path if necessary
+
+const MONGO_URI = 'mongodb://localhost:27017/Gestion_desBiens'; // Replace with your MongoDB URI
+
+async function insertAdmin() {
+    try {
+        // Connect to MongoDB
+        await mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log('MongoDB connected');
+
+        // Create a new admin instance
+        const admin = new Admin({
+            username: 'admin',
+            password: 'password123' // Set the password directly
+        });
+
+        // Save the admin to the database
+        const savedAdmin = await admin.save();
+        console.log('Admin added:', savedAdmin);
+
+        // Close the MongoDB connection
+        mongoose.connection.close();
+    } catch (err) {
+        console.error('Error:', err.message);
+        mongoose.connection.close();
+    }
+}
+
+// Run the function to insert the admin
+insertAdmin();

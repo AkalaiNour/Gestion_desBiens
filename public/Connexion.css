@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Poppins';
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.img {
+    flex: 6;
+    background-size: cover;
+    background-position: center;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.other_side {
+    flex: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.connexionBox {
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.field {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.field input,.field select  {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #3e38a5;
+    outline: none;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.field input:focus {
+    border: none;
+    border-bottom: 2px solid #564fde;
+}
+
+.error-message {
+    background-color: #f8d7da; /* Red background for danger */
+    color: #721c24; /* Dark red text color */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.forget {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.forget a {
+    margin: 0;
+    color: #564fde;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.forget p:hover {
+    text-decoration: underline;
+}
+
+.buttonConnexion {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.buttonConnexion button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #564fde;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttonConnexion button:hover {
+    background-color: #3e38a5;
+}
+
+.Inscription {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.Inscription a {
+    margin: 0;
+    color: #564fde;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.Inscription a:hover {
+    text-decoration: underline;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

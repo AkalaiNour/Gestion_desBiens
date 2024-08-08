@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="/message.css">
+    <title>Messages</title>
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/annonce.html">
+         <div><i class="uil uil-home"></i> Page d'accueil</div>
+        </a>
+        <a href="/dashboard">
+         <div><i class="uil uil-list-ul"></i> Mes annonces</div>
+        </a>
+        <a href="/stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="/ListeMessage.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div class="Logout">
+            <a href="/logout">
+              <i class="uil uil-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+    </div>
+    <div class="Container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <% if (recipients) { %>
+                    <img src="<%= recipients.profilePicture || '/blank.png' %>" alt="Profile Picture" class="profile-picture">
+                    <div class="header-text">
+                        <h2><%= recipients.Nom + " " + recipients.Prénom %></h2>
+                        <% if (messages) { %>
+                            <h2 class="message-subject">Subject: <%= annonce.titre || "No Subject" %></h2>
+                            <% } else { %>
+                            <h3 class="message-subject">No Subject</h3>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <img src="/blank.png" alt="Profile Picture" class="profile-picture">
+                    <div class="header-text">
+                        <h2>Unknown Sender</h2>
+                        <h3 class="message-subject">No Subject</h3>
+                    </div>
+                <% } %>
+            </div>
+            
+            <div class="chat-box" id="chatBox">
+                <% messages.forEach(message => { %>
+                    <div class="chat-message-container <%= message.senderId._id.toString() === recipientId.toString() ? 'received' : 'sent' %>">
+                        <img src="<%= message.senderId.profilePicture || '/blank.png' %>" alt="Profile Picture" class="chat-profile-picture">
+                        <div class="chat-message">
+                            <p><%= message.content %></p>
+                            <% if (message.senderId._id.toString() === currentUserId.toString()) { %>
+                                <span class="status-icon">
+                                    <% if (message.seen) { %>
+                                        <i class="uil uil-eye"></i> <!-- Seen icon -->
+                                    <% } else { %>
+                                        <i class="uil uil-paper-plane"></i> <!-- Sent icon -->
+                                    <% } %>
+                                </span>
+                            <% } %>
+                        </div>
+                        <span class="timestamp"><%= new Date(message.timestamp).toLocaleString() %></span>
+                    </div>
+                <% }) %>
+            </div>
+            <div class="message-compose">
+                <form action="/sendMessage" method="POST" id="messageForm">
+                    <input type="text" name="message" placeholder="Type your message..." required>
+                    <input type="hidden" name="senderId" value="<%= currentUserId %>">
+                    <input type="hidden" name="annonceId" value="<%= annonce.id %>">
+                    <input type="hidden" name="recipientId" value="<%= userId %>">
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        document.querySelector('#messageForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const message = event.target.message.value;
+            const senderId = event.target.senderId.value;
+            const recipientId = event.target.recipientId.value;
+
+            socket.emit('sendMessage', { message, senderId, recipientId });
+
+            event.target.message.value = ''; // Clear the input
+
+            // Scroll to the bottom after sending a message
+            scrollToBottom();
+        });
+
+        socket.on('newMessage', (newMessage) => {
+            // Append the new message to the chat box
+            const chatBox = document.querySelector('.chat-box');
+            const messageHtml = `
+                <div class="chat-message-container sent">
+                    <img src="${newMessage.senderId.profilePicture || '/blank.png'}" alt="Profile Picture" class="chat-profile-picture">
+                    <div class="chat-message">
+                        <p><strong>${newMessage.senderId.Nom + ' ' + newMessage.senderId.Prénom}:</strong> ${newMessage.content}</p>
+                        <span class="timestamp">${new Date(newMessage.timestamp).toLocaleString()}</span>
+                        <span class="status-icon">
+                            <i class="uil uil-paper-plane"></i> <!-- Sent icon -->
+                        </span>
+                    </div>
+                </div>
+            `;
+            chatBox.innerHTML += messageHtml;
+
+            // Scroll to the bottom when a new message is received
+            scrollToBottom();
+        });
+
+        socket.on('messageSeen', (messageId) => {
+            // Update the icon for the seen message
+            document.querySelectorAll('.chat-message').forEach((msgElement) => {
+                if (msgElement.dataset.id === messageId) {
+                    const statusIcon = msgElement.querySelector('.status-icon i');
+                    statusIcon.classList.remove('uil-paper-plane');
+                    statusIcon.classList.add('uil-eye');
+                }
+            });
+        });
+
+        function scrollToBottom() {
+            const chatBox = document.querySelector('.chat-box');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Mark messages as seen when the chat box is visible
+        const markMessagesAsSeen = () => {
+            const unseenMessages = document.querySelectorAll('.chat-message-container.received .status-icon i.uil-paper-plane');
+            unseenMessages.forEach((icon) => {
+                const messageId = icon.closest('.chat-message-container').dataset.id;
+                socket.emit('markAsSeen', { messageId, recipientId: currentUserId });
+            });
+        };
+
+        window.addEventListener('focus', markMessagesAsSeen);
+        window.addEventListener('load', () => {
+            markMessagesAsSeen();
+            scrollToBottom(); // Scroll to the bottom on page load
+        });
+    </script>
+</body>
+</html>

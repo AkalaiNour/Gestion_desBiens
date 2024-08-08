@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+</head>
+<body>
+    <header>
+        <a href="/"><div class="logo">LOGO</div></a>
+        <form action="/search" method="post">
+            <input type="search" name="search" class="search-bar" placeholder="Search...">
+            <div class="filter-container">
+                <i class="uil uil-filter" id="filter-icon"></i>
+                <div class="filter-dropdown" id="filter-dropdown">
+                    <h4>Filtres Disponibles :</h4>
+                    <select name="propertyType" id="propertyType">
+                        <option value="" disabled selected>Type de bien</option>
+                        <% categories.forEach(category=> { %>
+                            <option disabled>=== <%= category.category %> ===</option>
+                            <% category.offerings.forEach(offering=> { %>
+                                <option value="<%= offering %>">
+                                    <%= offering %>
+                                </option>
+                                <% }); %>
+                                    <% }); %>
+                    </select>
+                    <input type="text" name="location" id="location" placeholder="Localisation (ville, code postal)">
+                    <input type="number" name="minPrice" id="minPrice" placeholder="Prix minimum (€)">
+                    <input type="number" name="maxPrice" id="maxPrice" placeholder="Prix maximum (€)">
+                    <input type="number" name="minSurface" id="minSurface" placeholder="Surface minimum (m²)">
+                    <input type="number" name="maxSurface" id="maxSurface" placeholder="Surface maximum (m²)">
+                    <input type="number" name="rooms" id="rooms" placeholder="Nombre de pièces">
+                    <select name="transactionType" id="transactionType">
+                        <option value="" disabled selected>Type de transaction</option>
+                        <option value="vente">Vente</option>
+                        <option value="location">Location</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </div>
+            </div>
+        </form>
+        <div class="navbar">
+            <div class="categories-dropdown">
+                <button class="categories-button">Categories</button>
+                <div class="categories-dropdown-content">
+                    <% categories.forEach(category => { %>
+                    <div class="category-item">
+                        <button class="category-button">
+                            <%= category.category %>
+                        </button>
+                        <div class="offerings-dropdown-content">
+                            <% category.offerings.forEach(offering => { %>
+                            <a href="#">
+                                <%= offering %>
+                            </a>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            <% if (!userLoggedIn) { %>
+            <a href="/">Connexion</a>
+            <% } else { %>
+            <a href="/Favourite.html" class="favorite">
+                <i class="uil uil-heart"></i>
+            </a>
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                    <i class="uil uil-user"></i>
+                </button>
+                 <div class="profile-dropdown-content">
+                    <a href="/profile">Mon Profil</a>
+                    <a href="/dashboard">Mes annonces</a>
+                    <a href="/forms.html">Publier une annonce</a>
+                    <a href="/changepassword/<%= array.id %>">Changer le mot de passe</a>
+                    <a href="/ListeMessage.html">Chat</a>
+                </div>
+            </div>
+            <a href="/logout" class="logout-button">Déconnexion</a>
+            <% } %>
+        </div>
+    </header>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-picture" id="profilePicContainer">
+                <img id="profileImage" src="<%= array.profilePicture || 'https://via.placeholder.com/150' %>" alt="Profile Picture">
+
+                <!-- File Input for Uploading New Profile Picture -->
+                <form id="uploadForm" action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="uploadPicture" name="profilePicture" accept="image/*" style="display: none;">
+                    <label for="uploadPicture" class="upload-label"></label>
+                </form>
+
+                <!-- Buttons for Editing and Deleting Picture -->
+                <div class="profile-actions hidden" id="overlay">
+                    <button id="modifyPic" class="action-button"><i class="fas fa-edit"></i></button>
+                    <button id="deletePic" class="action-button"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1><%= array.Nom + " " + array.Prénom %></h1>
+                <p><%= array.rôle %></p>
+            </div>
+            <div class="action-buttons">
+                <a href="/Editprofile/<%= array._id %>"><button class="edit-info"><i class="fas fa-edit"></i> Modifier vos informations</button></a>
+                <a href="/changepassword/<%= array._id %>"><button class="change-password"><i class="fas fa-key"></i> Changer le mot de passe</button></a>
+            </div>
+        </div>
+        <div class="profile-details">
+            <h2 style="font-weight: bold;">Contact</h2>
+            <p><span style="font-weight: bold;">Email: </span><%= array.Email %></p>
+            <p><span style="font-weight: bold;">Téléphone: </span><%= array.Téléphone %></p>
+            <div class="action-buttons">
+                <a href="/dashboard"><button class="edit-info"><i class="fas fa-list"></i> Mes Annonces</button></a>
+                <a href="forms.html"><button class="change-password"><i class="fas fa-plus-circle"></i> Publier une annonce</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePicContainer = document.getElementById('profilePicContainer');
+            const overlay = document.getElementById('overlay');
+            const modifyPic = document.getElementById('modifyPic');
+            const deletePic = document.getElementById('deletePic');
+            const uploadPicture = document.getElementById('uploadPicture');
+            const profileImage = document.getElementById('profileImage');
+            
+            if (profilePicContainer) {
+                profilePicContainer.addEventListener('click', function() {
+                    if (overlay) {
+                        overlay.classList.toggle('hidden');
+                    }
+                });
+            }
+            
+            if (modifyPic) {
+                modifyPic.addEventListener('click', function() {
+                    uploadPicture.click();
+                });
+            }
+
+            if (deletePic) {
+                deletePic.addEventListener('click', function() {
+                    fetch('/delete-profile-picture', {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            profileImage.src = 'https://via.placeholder.com/150';
+                            if (overlay) {
+                                overlay.classList.add('hidden');
+                            }
+                        } else {
+                            console.error('Deletion failed:', data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            }
+
+            uploadPicture.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('profilePicture', file);
+
+                    fetch('/upload-profile-picture', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            profileImage.src = data.profilePictureUrl;
+                            if (overlay) {
+                                overlay.classList.add('hidden');
+                            }
+                        } else {
+                            console.error('Upload failed:', data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!profilePicContainer.contains(event.target) && !overlay.contains(event.target)) {
+                    overlay.classList.add('hidden');
+                }
+            });
+            const filterIcon = document.getElementById('filter-icon');
+            const filterDropdown = document.getElementById('filter-dropdown');
+    
+            filterIcon.addEventListener('click', function () {
+                filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+    
+            // Apply filters function
+            function applyFilters() {
+                const propertyType = document.getElementById('propertyType').value;
+                const location = document.getElementById('location').value;
+                const minPrice = document.getElementById('minPrice').value;
+                const maxPrice = document.getElementById('maxPrice').value;
+                const minSurface = document.getElementById('minSurface').value;
+                const maxSurface = document.getElementById('maxSurface').value;
+                const rooms = document.getElementById('rooms').value;
+                const transactionType = document.getElementById('transactionType').value;
+    
+                console.log('Applying filters:', {
+                    propertyType,
+                    location,
+                    minPrice,
+                    maxPrice,
+                    minSurface,
+                    maxSurface,
+                    rooms,
+                    transactionType
+                });
+    
+                filterDropdown.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

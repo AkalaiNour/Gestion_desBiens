@@ -1,0 +1,30 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const notificationSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Inscription',
+        required: true
+    },
+    senderId: { // Add senderId field
+        type: Schema.Types.ObjectId,
+        ref: 'Message',
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
+    },
+    seen: {
+        type: Boolean,
+        default: false
+    }
+});
+
+const Notification = mongoose.model('Notification', notificationSchema);
+module.exports = Notification;

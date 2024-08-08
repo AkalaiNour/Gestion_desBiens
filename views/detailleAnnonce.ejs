@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail Annonce</title>
+    <link rel="stylesheet" href="/d_Annonce.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"> <!-- Icon library -->
+
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="Sidebar">
+        <a href="/statistics">
+            <div><i class="uil uil-home"></i> Dashboard</div>
+        </a>
+        <a href="/dashboardAdmin">
+            <div><i class="uil uil-user"></i> Gestion des utilisateurs</div>
+        </a>
+        <a href="/gestionAnnonces">
+            <div><i class="uil uil-list-ul"></i> Gestion des annonces</div>
+        </a>
+        <a href="/deconnexion">
+            <div><i class="uil uil-sign-out-alt"></i>Logout</div>
+        </a>
+    </div>
+
+    <!-- Container for the detailed view -->
+    <div class="container">
+        <h1>Détail de l'Annonce</h1>
+        <div class="details">
+            <!-- Display Annonce Information -->
+            <div class="info">
+                <h2><%= annonce.titre %></h2>
+                <p><strong>Description:</strong> <%= annonce.description %></p>
+                <p><strong>Prix:</strong> <%= annonce.Prix %> €</p>
+                <p><strong>Surface:</strong> <%= annonce.surface %> m²</p>
+                <p><strong>Nombre de pièces:</strong> <%= annonce.nombreDePieces %></p>
+                <p><strong>Type de bien:</strong> <%= annonce.typeDeBien %></p>
+                <p><strong>Adresse:</strong> <%= annonce.adresse %></p>
+                <p><strong>Agent Responsable:</strong> <%= annonce.userId.Nom %> <%= annonce.userId.Prénom %></p>
+            </div>
+
+            <!-- Display Photos -->
+            <div class="photos">
+                <% annonce.photosVideos.forEach((photo, index) => { %>
+                    <img src="<%= photo %>" alt="Photo de l'annonce" class="<%= index === 0 ? 'active' : '' %>">
+                <% }) %>
+                <button class="nav-button prev"><i class="uil uil-angle-left"></i></button>
+                <button class="nav-button next"><i class="uil uil-angle-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <a href="/EditAnnonce/<%= annonce._id %>"><button><i class="uil uil-edit"></i> Modifier</button></a>
+            <form action="/deleteAnnonce/<%= annonce._id %>" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce?');"><i class="uil uil-trash"></i> Supprimer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript for Image Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('.photos img');
+            let currentImageIndex = 0;
+
+            const updateImageVisibility = () => {
+                images.forEach((img, index) => {
+                    img.classList.toggle('active', index === currentImageIndex);
+                });
+            };
+
+            document.querySelector('.nav-button.next').addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                updateImageVisibility();
+            });
+
+            document.querySelector('.nav-button.prev').addEventListener('click', () => {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                updateImageVisibility();
+            });
+
+            updateImageVisibility();
+        });
+    </script>
+</body>
+
+</html>

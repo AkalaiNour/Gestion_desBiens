@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/contactSeller.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Contact Seller</title>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Contact <%= user.name %></h2>
+        </div>
+        <div class="chat-body">
+            <% if (messages && messages.length > 0) { %>
+                <% messages.forEach(message => { %>
+                    <div class="message <%= message.senderId.toString() === currentUserId ? 'sent' : 'received' %>">
+                        <div class="message-content">
+                            <p><%= message.content %></p>
+                        </div>
+                        <span class="message-time"><%= new Date(message.timestamp).toLocaleTimeString() %></span>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No messages yet.</p>
+            <% } %>
+        </div>
+        <form class="chat-footer" action="/sendMessage" method="POST">
+            <input type="hidden" name="senderId" value="<%= currentUserId %>">
+            <input type="hidden" name="recipientId" value="<%= user._id %>">
+            <input type="text" id="message" name="message" placeholder="Type your message..." required>
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+        <a href="/listingDetails.html/<%= user._id %>" class="back-button"><i class="fas fa-arrow-left"></i> Back to Listing Details</a>
+    </div>
+</body>
+
+</html>

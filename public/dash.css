@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: fixed; /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+}
+.Sidebar .notification-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+.Container {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Add margin to avoid overlap with fixed sidebar */
+    position: relative;
+}
+
+.search-container {
+    display: flex;
+    position: relative;
+    margin-bottom: 20px;
+    height: 35px;
+    width: 400px;
+}
+
+.search-bar {
+    flex-grow: 1;
+    padding: 10px 10px 10px 30px;
+    font-size: 16px;
+    border-radius: 9px;
+    border: 2px solid #564fde;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #564fde;
+}
+
+.AddAnnonce {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+}
+
+.AddAnnonce button {
+    padding: 10px 10px;
+    font-size: 15px;
+    background-color: #564fde;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.AddAnnonce button i {
+    margin-right: 5px;
+}
+
+.AddAnnonce button:hover {
+    background-color: #3e38a5;
+}
+
+.annonce-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.annonce-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+    font-size: 12px;
+    vertical-align: middle; /* Ensures vertical alignment */
+}
+
+.annonce-table th {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.annonce-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.annonce-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.action-buttons {
+    display: flex;
+}
+
+.action-button {
+    padding: 5px 10px; /* Adjust padding for better button size */
+    font-size: 14px;
+    margin: 5px;
+    background-color: #564fde;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex; /* Ensure flex layout */
+    align-items: center;
+}
+
+.action-button i {
+    margin-right: 5px;
+}
+.Logout {
+    margin: 300px 0px;    
+}

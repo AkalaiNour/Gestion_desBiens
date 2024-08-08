@@ -1,0 +1,124 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #e9eff1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 16px;
+    background: #0078d4;
+    color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #005a9e;
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.chat-body {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f5f5f5;
+}
+
+.message {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.message-content {
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.message.received .message-content {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    margin-right: auto;
+}
+
+.message.sent .message-content {
+    background: #0078d4;
+    color: #ffffff;
+    margin-left: auto;
+}
+
+.message-time {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: 10px;
+}
+
+.chat-footer {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: #ffffff;
+}
+
+.chat-footer input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.chat-footer button {
+    background: #0078d4;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-footer button:hover {
+    background: #005a9e;
+}
+
+.back-button {
+    display: block;
+    margin: 10px auto;
+    text-decoration: none;
+    color: #0078d4;
+    font-size: 16px;
+    text-align: center;
+}
+
+.back-button i {
+    margin-right: 8px;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}

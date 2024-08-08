@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des utilisateurs</title>
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/statistics">
+            <div><i class="uil uil-home"></i> Dashboard</div>
+        </a>
+        <a href="/dashboardAdmin">
+            <div><i class="uil uil-user"></i> Gestion des utilisateurs</div>
+        </a>
+        <a href="/gestionAnnonces">
+            <div><i class="uil uil-list-ul"></i> Gestion des annonces</div>
+        </a>
+        <a href="/deconnexion">
+            <div><i class="uil uil-sign-out-alt"></i>Logout</div>
+        </a>
+    </div>
+    <div class="Container">
+        <h1>Gestion des utilisateurs</h1>
+        <form action="/search_Users" method="GET" class="search-container">
+            <input type="text" name="query" class="search-bar" placeholder="Search...">
+                <i class="uil uil-search search-icon"></i>
+            </button>
+        </form>
+
+        <% if (typeof array !== 'undefined' && array.length === 0) { %>
+            <h1 style="text-align: center; margin-top: 50px; color: gray;">pas de données disponibles</h1>
+        <% } else { %>
+            <table class="annonce-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Rôle</th>
+                        <th>Date de création</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% array.forEach((item, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= item.Nom %></td>
+                            <td><%= item.Prénom %></td>
+                            <td><%= item.Email %></td>
+                            <td><%= item.Téléphone %></td>
+                            <td><%= item.rôle %></td>
+                            <td>
+                                <%= new Date(item.dateDeCréation).toLocaleDateString('en-US', {
+                                    weekday: 'short',
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric'
+                                }) %> 
+                                <%= new Date(item.dateDeCréation).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) %>
+                            </td>
+                            <td class="action-buttons">
+                                <a href="/EditUser/<%= item._id %>"><button class="action-button"><i class="uil uil-edit"></i></button></a>
+                                <form action="/deleteUser/<%= item._id %>?_method=DELETE" method="post">
+                                    <button class="action-button"><i class="uil uil-trash"></i></button>
+                                </form>
+                                <a href="/detailleUser/<%= item._id %>"><button class="action-button"><i class="uil uil-eye"></i></button></a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</body>
+</html>

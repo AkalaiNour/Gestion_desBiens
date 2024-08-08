@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dtls.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>Annonces Publiées</title>
+    <style>
+        .Container {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .annonce-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .annonce-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .annonce-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .annonce-item .images-container {
+            position: relative;
+            width: 100%;
+            height: 200px; /* Adjust based on your design */
+            overflow: hidden;
+        }
+
+        .annonce-item .images-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+        }
+
+        .annonce-item .images-container img.active {
+            opacity: 1;
+        }
+
+        .annonce-item h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .annonce-item p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .annonce-item {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .annonce-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="Sidebar">
+        <a href="/">
+            <div><i class="uil uil-list-ul"></i> Annonces</div>
+        </a>
+        <a href="stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="message.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div><i class="uil uil-bell"></i> Notification</div>
+    </div>
+
+    <div class="Container">
+        <header>Annonces Publiées</header>
+        <div class="annonce-list">
+            <% annonces.forEach(annonce => { %>
+                <div class="annonce-item" data-images='<%= JSON.stringify(annonce.photosVideos) %>'>
+                    <div class="images-container">
+                        <% if (annonce.photosVideos && annonce.photosVideos.length > 0) { 
+                            annonce.photosVideos.forEach(photo => { %>
+                                <img src="<%= photo %>" alt="Annonce Image">
+                        <% }) } %>
+                    </div>
+                    <h3><%= annonce.titre %></h3>
+                    <p><strong>Prix:</strong> <%= annonce.Prix %></p>
+                    <p><strong>Surface:</strong> <%= annonce.surface %> m²</p>
+                    <p><strong>Nombre de pièces:</strong> <%= annonce.nombreDePieces %></p>
+                    <p><strong>Type de bien:</strong> <%= annonce.typeDeBien %></p>
+                    <p><strong>Adresse:</strong> <%= annonce.adresse %></p>
+                    <p><strong>Description:</strong> <%= annonce.description %></p>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.annonce-item').forEach(item => {
+            const imgElements = item.querySelectorAll('.images-container img');
+            let currentIndex = 0;
+            let timer;
+
+            if (imgElements.length > 1) {
+                imgElements[0].classList.add('active');
+
+                item.addEventListener('mouseenter', () => {
+                    timer = setInterval(() => {
+                        imgElements[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex + 1) % imgElements.length;
+                        imgElements[currentIndex].classList.add('active');
+                    }, 3000);
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    clearInterval(timer);
+                    imgElements.forEach(img => img.classList.remove('active'));
+                    imgElements[0].classList.add('active');
+                });
+            } else if (imgElements.length === 1) {
+                imgElements[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+
+</html>

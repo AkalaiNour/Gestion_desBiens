@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier les information</title>
+    <link rel="stylesheet" href="/EditUser.css">
+    <link rel="stylesheet" href="/dash.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/statistics">
+            <div><i class="uil uil-home"></i> Dashboard</div>
+        </a>
+        <a href="/dashboardAdmin">
+            <div><i class="uil uil-user"></i> Gestion des utilisateurs</div>
+        </a>
+        <a href="/gestionAnnonces">
+            <div><i class="uil uil-list-ul"></i> Gestion des annonces</div>
+        </a>
+        <a href="/deconnexion">
+            <div><i class="uil uil-sign-out-alt"></i>Logout</div>
+        </a>
+    </div>
+    <div class="container">
+        <header>Modifier les information d'utilisateur</header>
+        <form action="/EditUser/<%= obj._id %>?_method=PUT" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Nom</label>
+                            <input type="text" name="Nom" value="<%= obj.Nom %>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Prénom</label>
+                            <input type="text" name="Prénom" value="<%= obj.Prénom %>" step="0.01" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="texte" name="Email" value="<%= obj.Email %>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Téléphone</label>
+                            <input type="texte" name="Téléphone" value="<%= obj.Téléphone %>" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Rôle</label>
+                            <input type="texte" name="rôle" value="<%= obj.rôle %>" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="details ID">
+                    <button class="nextBtn" type="submit">
+                        <span class="btnText">Save Changes</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                </div>
+            </div>    
+        </form>
+    </div>
+</body>
+</html>

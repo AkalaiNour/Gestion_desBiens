@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: fixed; /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+}
+
+.Sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+.Container {
+    margin-left: 250px; /* Add margin to avoid overlap with fixed sidebar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.stats-boxes {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.stats-box {
+    flex: 1;
+    min-width: 200px;
+    background-color: #564fde;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stats-box h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.stats-box p {
+    font-size: 24px;
+    margin: 10px 0 0;
+    color: #ffffff;
+}
+
+h2 {
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+
+canvas {
+    max-width: 100%;
+    margin-top: 20px;
+    width: 100%;
+    height: 400px; /* Set a fixed height for better visibility */
+}
+
+.analytics-container {
+    display: flex;
+    justify-content: space-between; /* Align charts to the left and right */
+    gap: 30px; /* Space between charts */
+    margin: 50px 30px;
+    margin-left: 70px;
+}
+
+.analytics {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px #0000004d;
+    padding: 20px;
+    width: 45%; /* Adjust width here */
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    flex-direction: column; /* Column layout to stack heading and chart */
+}
+
+@media (max-width: 768px) {
+    .stats-boxes {
+        flex-direction: column;
+    }
+
+    .stats-box {
+        margin-bottom: 20px;
+    }
+
+    .analytics-container {
+        flex-direction: column; /* Stack charts vertically on smaller screens */
+        gap: 20px;
+    }
+
+    .analytics {
+        width: 100%; /* Full width for charts on smaller screens */
+    }
+}

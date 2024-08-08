@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/editProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+    <header>
+        <a href="/"><div class="logo">LOGO</div></a>
+        <form action="/search" method="post">
+            <input type="search" name="search" class="search-bar" placeholder="Search...">
+            <div class="filter-container">
+                <i class="uil uil-filter" id="filter-icon"></i>
+                <div class="filter-dropdown" id="filter-dropdown">
+                    <h4>Filtres Disponibles :</h4>
+                    <select name="propertyType" id="propertyType">
+                        <option value="" disabled selected>Type de bien</option>
+                        <% categories.forEach(category=> { %>
+                            <option disabled>=== <%= category.category %> ===</option>
+                            <% category.offerings.forEach(offering=> { %>
+                                <option value="<%= offering %>">
+                                    <%= offering %>
+                                </option>
+                                <% }); %>
+                                    <% }); %>
+                    </select>
+                    <input type="text" name="location" id="location" placeholder="Localisation (ville, code postal)">
+                    <input type="number" name="minPrice" id="minPrice" placeholder="Prix minimum (€)">
+                    <input type="number" name="maxPrice" id="maxPrice" placeholder="Prix maximum (€)">
+                    <input type="number" name="minSurface" id="minSurface" placeholder="Surface minimum (m²)">
+                    <input type="number" name="maxSurface" id="maxSurface" placeholder="Surface maximum (m²)">
+                    <input type="number" name="rooms" id="rooms" placeholder="Nombre de pièces">
+                    <select name="transactionType" id="transactionType">
+                        <option value="" disabled selected>Type de transaction</option>
+                        <option value="vente">Vente</option>
+                        <option value="location">Location</option>
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </div>
+            </div>
+        </form>        
+        <div class="navbar">
+            <div class="categories-dropdown">
+                <button class="categories-button">Categories</button>
+                <div class="categories-dropdown-content">
+                    <% categories.forEach(category => { %>
+                    <div class="category-item">
+                        <button class="category-button">
+                            <%= category.category %>
+                        </button>
+                        <div class="offerings-dropdown-content">
+                            <% category.offerings.forEach(offering => { %>
+                            <a href="#">
+                                <%= offering %>
+                            </a>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            <% if (!userLoggedIn) { %>
+            <a href="/">Connexion</a>
+            <% } else { %>
+            <a href="/Favourite.html" class="favorite">
+                <i class="uil uil-heart"></i>
+            </a>
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                    <i class="uil uil-user"></i>
+                </button>
+                 <div class="profile-dropdown-content">
+                    <a href="/profile">Mon Profil</a>
+                    <a href="/dashboard">Mes annonces</a>
+                    <a href="/forms.html">Publier une annonce</a>
+                    <a href="/changepassword/<%= userId %>">Changer le mot de passe</a>
+                    <a href="/chat">Chat</a>
+                </div>
+            </div>
+            <a href="/logout" class="logout-button">Déconnexion</a>
+            <% } %>
+        </div>
+    </header>
+    <div class="profile-edit-container">
+        <h1>Edit Profile</h1>
+        <form action="/Editprofile/<%= obj.id %>" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="form-group">
+                <label for="firstName">Nom</label>
+                <input type="text" id="firstName" name="Nom" value="<%= obj.Nom %>" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Prénom</label>
+                <input type="text" id="lastName" name="Prénom" value="<%= obj.Prénom %>" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" value="<%= obj.Email %>" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Téléphone</label>
+                <input type="tel" id="phone" name="Téléphone" value="<%= obj.Téléphone %>" required>
+            </div>
+            <button type="submit" class="submit-button">Save Changes</button>
+        </form>
+    </div>
+    <script>
+        const filterIcon = document.getElementById('filter-icon');
+            const filterDropdown = document.getElementById('filter-dropdown');
+    
+            filterIcon.addEventListener('click', function () {
+                filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+    
+            // Apply filters function
+            function applyFilters() {
+                const propertyType = document.getElementById('propertyType').value;
+                const location = document.getElementById('location').value;
+                const minPrice = document.getElementById('minPrice').value;
+                const maxPrice = document.getElementById('maxPrice').value;
+                const minSurface = document.getElementById('minSurface').value;
+                const maxSurface = document.getElementById('maxSurface').value;
+                const rooms = document.getElementById('rooms').value;
+                const transactionType = document.getElementById('transactionType').value;
+    
+                console.log('Applying filters:', {
+                    propertyType,
+                    location,
+                    minPrice,
+                    maxPrice,
+                    minSurface,
+                    maxSurface,
+                    rooms,
+                    transactionType
+                });
+    
+                filterDropdown.style.display = 'none';
+            }
+    </script>
+</body>
+</html>

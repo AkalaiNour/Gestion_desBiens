@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/activity.css">
+    <title>Historique d'activité</title>
+</head>
+<body>
+    <div class="Sidebar">
+        <a href="/">
+            <div><i class="uil uil-list-ul"></i> Annonces</div>
+        </a>
+        <a href="stats.html">
+            <div><i class="uil uil-chart-bar"></i> Statistique</div>
+        </a>
+        <a href="message.html">
+            <div><i class="uil uil-envelope"></i> Message</div>
+        </a>
+        <div><i class="uil uil-bell"></i> Notification</div>
+    </div>
+
+    <div class="Container">
+        <header>Historique d'activité</header>
+
+        <% if (activities.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Date et Heure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% activities.forEach(activity => { %>
+                        <tr>
+                            <td><%= activity.description %></td>
+                            <td><%= new Date(activity.timestamp).toLocaleString('fr-FR') %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Aucune activité enregistrée.</p>
+        <% } %>
+    </div>
+</body>
+</html>

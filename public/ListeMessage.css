@@ -1,0 +1,100 @@
+/* General styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: fixed; /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+.Container {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Add margin to avoid overlap with fixed sidebar */
+}
+
+.message-list {
+    margin-top: 20px;
+}
+
+.message-item {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.message-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.message-date {
+    color: #777;
+}
+
+.message-content {
+    font-size: 16px;
+}
+.links{
+    text-decoration: none;
+    color: black;
+}
+.Logout {
+    margin: 300px 0px;    
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .Sidebar {
+        width: 150px;
+    }
+
+    .Container {
+        margin-left: 150px;
+    }
+}
+

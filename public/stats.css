@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    position: fixed; /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+.Container {
+    padding: 20px;
+    margin-left: 250px; /* Add margin to avoid overlap with fixed sidebar */
+}
+.Container h1 {
+    padding: 10px;
+}
+
+.box-container {
+    display: flex;
+    gap: 20px; /* Space between boxes */
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    background-color: #564fde;
+    height: 100px;
+    padding: 10px 50px;
+    margin: 20px 50px;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out; /* Transition effect */
+}
+
+.box:hover {
+    transform: scale(1.05); /* Zoom in effect */
+}
+
+.box i {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.box .text {
+    font-size: 20px;
+    font-weight: 500; /* Fixed font-weight value */
+}
+
+.analytics-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 56px 28px;
+    margin-left: 76px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.analytics {
+    border-radius: 8px;
+    box-shadow: 0 5px 10px #0000004d;
+    padding: 10px;
+    width: 80%; /* Adjust width here */
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+}
+canvas{
+    height: 50%;
+    width: 90%;
+}
+.Logout {
+    margin: 300px 0px;    
+}

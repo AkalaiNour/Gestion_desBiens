@@ -1,0 +1,288 @@
+/* General body and link styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #f0f2f5; /* Light background for the entire page */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Sidebar styling */
+.Sidebar {
+    width: 250px;
+    background-color: #564fde;
+    color: white;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0; /* Reduced padding for a cleaner look */
+    position: fixed; /* Fixed position to stay in place during scrolling */
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for the sidebar */
+}
+
+.Sidebar div {
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.Sidebar div:hover {
+    background-color: #3e38a5;
+}
+
+.Sidebar i {
+    margin-right: 15px;
+}
+
+/* Main container styling */
+.Container {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Add margin to avoid overlap with fixed sidebar */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+/* Chat container styling */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 82vh;
+    width: 1010px;
+    margin: 35px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat header styling */
+.chat-header {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    padding: 10px 20px; /* Adjust padding for better spacing */
+    border-bottom: 1px solid #ddd;
+    background-color: #564fde;
+    color: white;
+    border-top-left-radius: 10px; /* Rounded top-left corners */
+    border-top-right-radius: 10px; /* Rounded top-right corners */
+}
+.chat-header h2 {
+    margin-left: 10px;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.profile-picture {
+    width: 50px; /* Adjust the size of the profile picture */
+    height: 50px; /* Keep it square */
+    border-radius: 50%; /* Make it a circle */
+    margin-right: 15px; /* Space between picture and text */
+    object-fit: cover; /* Ensure the image covers the entire area */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a slight shadow for depth */
+    border: 2px solid #fff; /* White border around the picture */
+}
+.chat-profile-picture {
+    width: 40px; /* Smaller size for message profile pictures */
+    height: 40px;
+    border-radius: 50%; /* Circular shape */
+    object-fit: cover; /* Cover to maintain aspect ratio */
+    border: 1px solid #ddd; /* Light border for separation */
+    margin-right: 10px; /* Space between image and message */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Light shadow */
+    flex-shrink: 0; /* Prevent shrinking when message text is too long */
+    margin-left: 10px;
+}
+.chat-message-container {
+    display: flex; /* Align image and text horizontally */
+    align-items: flex-start; /* Aligns text at the top next to the picture */
+    margin-bottom: 15px; /* Space between message bubbles */
+    position: relative; /* For potential future positioning tweaks */
+}
+
+/* Style for received and sent messages */
+.chat-message-container.sent {
+    flex-direction: row-reverse; /* Swap direction for sent messages */
+    text-align: right; /* Text alignment */
+    margin-left: 40px; /* Offset for the sender's profile picture */
+}
+
+.chat-message-container.received {
+    margin-right: 40px; /* Offset for the recipient's profile picture */
+}
+
+.chat-message {
+    max-width: calc(100% - 50px); /* Allow space for the profile picture */
+    padding: 10px 15px; /* Padding inside message */
+    border-radius: 15px; /* Rounded corners for message bubbles */
+    background-color: #e0e0ff; /* Default color for received messages */
+    position: relative; /* For positioning elements inside the message */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Individual styles for message sent and received */
+.chat-message-container.sent .chat-message {
+    background-color: #e0e0ff; /* Light blue for sent messages */
+    border-bottom-right-radius: 0; /* Flat corner for alignment */
+}
+
+.chat-message-container.received .chat-message {
+    background-color: #fff; /* White for received messages */
+    border-bottom-left-radius: 0; /* Flat corner for alignment */
+}
+
+.status-icon {
+    font-size: 14px;
+    color: #4CAF50; /* Green color for icons */
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.status-icon i {
+    transition: color 0.3s ease;
+}
+
+.status-icon i.uil-eye {
+    color: #000000; /* Red color for seen */
+}
+
+.status-icon i.uil-paper-plane {
+    color: #3b7cc2; /* Blue color for sent */
+}
+
+/* User information styling */
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.online-status {
+    font-size: 12px;
+    color: #e0e0ff; /* Light blue text to match the chat bubble */
+}
+
+/* Chat box styling */
+.chat-box {
+    height: 400px; /* or any preferred height */
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Chat message styling */
+.chat-message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 60%;
+    word-wrap: break-word;
+    font-size: 14px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Message sent by the seller (current user) */
+
+
+/* Message text styles */
+.chat-message p {
+    margin: 0;
+}
+
+.chat-message strong {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.timestamp {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 5px;
+    text-align: right; /* Align timestamp to the right */
+    margin-right: 15px;
+    margin-top: 15px;
+    MARGIN-LEFT: 15px;
+
+}
+
+
+
+/* Message compose area styling */
+.message-compose {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+    border-bottom-left-radius: 10px; /* Rounded bottom-left corners */
+    border-bottom-right-radius: 10px; /* Rounded bottom-right corners */
+}
+
+/* Input field for composing messages */
+input[type="text"] {
+    flex-grow: 1; /* Allow the input field to take up available space */
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    margin-left: 10px; /* Space between input field and button */
+    width: 314%; /* Adjust width to auto to prevent overflow */
+}
+
+/* Change border color on focus */
+input[type="text"]:focus {
+    border-color: #564fde;
+    outline: none; /* Remove default outline */
+}
+
+/* Send button styling */
+button {
+    width: 80px; /* Reduced width for the button */
+    height: 40px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Removed top margin to align with input */
+    margin-left: 11px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Logout link styling */
+.Logout {
+    margin: 300px 0; /* Reduced margin for the logout link */
+    text-align: center; /* Center align the logout link */
+}
