@@ -16,8 +16,6 @@ const Message = require('../models/Message'); // Import your message model
 const Activity = require('../models/activity'); // Adjust path if necessary
 const Visit = require('../models/Visite'); // Import the Visit model
 
-
-
 // Ensure this path is correct
 
 router.use('/profilePictures', express.static(path.join(__dirname, 'public', 'profilePictures')));
@@ -150,15 +148,7 @@ router.post('/sendMessage', async (req, res) => {
     }
 });
 
-
-
-
-
 // Route to display messages between two users
-// Route to display messages between two users
-// Route to display messages between two users
-// Route to display messages between two users
-
 
 router.get('/message/:userId/:annonceId', async (req, res) => {
     const { userId, annonceId } = req.params;
@@ -221,12 +211,6 @@ router.get('/message/:userId/:annonceId', async (req, res) => {
         res.status(500).send('Error retrieving messages');
     }
 });
-
-
-
-
-
-
 
 // Routes
 router.get('/', async (req, res) => {
@@ -312,9 +296,6 @@ router.get('/annonce.html', async (req, res) => {
     }
 });
 
-
-
-
 router.get('/annonceDetails.html/:id', async (req, res) => {
     try {
         const annonce = await Annonce.findById(req.params.id).populate('userId');
@@ -344,10 +325,6 @@ router.get('/annonceDetails.html/:id', async (req, res) => {
     }
 });
 
-
-
-
-
 // Assuming you are using express-session
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -359,7 +336,6 @@ router.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
-
 
 router.get('/Inscription.html', (req, res) => {
     res.render('Inscription', { error: null });
@@ -422,7 +398,6 @@ router.post('/favorites/add', authMiddleware, async (req, res) => {
     }
 });
 
-
 router.post('/api/favorites/remove', authMiddleware, async (req, res) => {
     try {
         const { annonceId } = req.body;
@@ -455,8 +430,6 @@ router.post('/api/favorites/remove', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-
 
 router.post('/inscription.html', async (req, res) => {
     const { Nom, Prénom, Email, Password, Téléphone, rôle } = req.body;
@@ -524,19 +497,6 @@ router.get('/ListeMessage.html', authMiddleware, (req, res) => {
             res.status(500).send('Server error');
         });
 });
-
-
-
-
-// Express route for handling message retrieval and rendering the EJS template
-
-
-
-
-
-
-
-
 
 router.get('/detaille/:id', async (req, res) => {
     const annonceId = req.params.id;
@@ -638,12 +598,6 @@ router.get('/stats.html', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
-
-
-
-
-
 
 router.get('/Edit/:id', async (req, res) => {
     try {
@@ -760,8 +714,6 @@ router.post('/forms.html', authMiddleware, uploadPhotosVideos, async (req, res) 
     }
 });
 
-
-
 router.put('/Edit/:id', uploadPhotosVideos, async (req, res) => {
     try {
         // Find the existing annonce
@@ -816,9 +768,6 @@ router.put('/Edit/:id', uploadPhotosVideos, async (req, res) => {
     }
 });
 
-
-
-
 router.post('/Editprofile/:id', async (req, res) => {
     try {
         const userId = req.params.id;
@@ -850,10 +799,7 @@ router.post('/Editprofile/:id', async (req, res) => {
     }
 });
 
-
-
 /*************************CHANGE PASSWORD******************************/
-
 router.post('/changepassword/:id', async (req, res) => {
     try {
         const { oldPassword, newPassword, confirmPassword } = req.body;
@@ -895,8 +841,6 @@ router.post('/changepassword/:id', async (req, res) => {
         res.status(500).send('Server error.');
     }
 });
-
-
 
 router.delete('/Delete/:id', async (req, res) => {
     try {
@@ -1068,8 +1012,6 @@ router.get('/deconnexion', (req, res) => {
         res.redirect('/AdminLogin'); // Adjust the path as needed
     });
 });
-
-
 
 router.get('/dashboardAdmin', async (req, res) => {
     try {
@@ -1746,14 +1688,4 @@ router.get('/search_Annonce', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
-
-
-
-
-
-
-
 module.exports = router;

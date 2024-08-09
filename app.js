@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
@@ -10,6 +9,8 @@ const bodyParser = require('body-parser');
 const client = require('./routes/client');
 const http = require('http');
 const socketIo = require('socket.io');
+const mongoose = require('mongoose');
+
 
 // Models
 const Inscription = require('./models/inscription');
@@ -28,7 +29,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 // MongoDB Atlas connection URL
-const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.5kxbe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const mongoURI = 'mongodb+srv://admin:admin1234@cluster0.5kxbe.mongodb.net/Gestion_desBiens?retryWrites=true&w=majority&appName=Cluster0';
 
 app.use(session({
     secret: 'your_secret_key', // Replace with a strong secret key
